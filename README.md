@@ -4,6 +4,7 @@ This is Porter Robinson as an App.
 This app provides information and history of Porter Robinson as an artist.
 
 # Features
+
 - Tour dates (using a backend)
 - Play song (using Spotify API)
 - Presents a gallery of photos or videos from their events
@@ -11,7 +12,9 @@ This app provides information and history of Porter Robinson as an artist.
 - ? follow all social medias
 
 # How to use
+
 Install all dependency
-- $npm i
-Start the app with
-- yarn start
+
+- $yarn install
+  Start the app with
+- $yarn start

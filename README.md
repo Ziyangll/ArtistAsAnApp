@@ -13,6 +13,9 @@ This app provides information and history of Porter Robinson as an artist.
 
 # How to use
 
+either https://expo.dev/@ziyangkettle/ArtistAsAnApp
+or
+
 - $git clone https://github.com/Ziyangll/ArtistAsAnApp
 - $cd ArtistAsAnApp
   Install all dependency

@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Button, ScrollView, Image } from 'react-native';
+import {
+  StyleSheet,
+  Button,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import { ResponseType, useAuthRequest } from 'expo-auth-session';
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { FontAwesome } from '@expo/vector-icons';
+import { Audio } from 'expo-av';
 
 const PorterRobinsonArtistID = '3dz0NnIZhtKKeXZxLOxCam';
 const discovery = {
@@ -13,8 +20,28 @@ const discovery = {
 
 export default function PlayMusicScreen() {
   const [isDataHere, setIsDataHere] = useState(false);
-  const [albumData, setAlbumData] = useState([]);
+  const [tracksData, setTracksData] = useState([]);
   const [token, setToken] = useState('');
+  // playing music
+  const [sound, setSound] = React.useState();
+  async function playSound(preview_url: string) {
+    console.log('Loading Sound');
+    const { sound } = await Audio.Sound.createAsync({ uri: preview_url });
+    setSound(sound);
+
+    console.log('Playing Sound');
+    await sound.playAsync();
+  }
+
+  React.useEffect(() => {
+    return sound
+      ? () => {
+          console.log('Unloading Sound');
+          sound.unloadAsync();
+        }
+      : undefined;
+  }, [sound]);
+  // connect to spotify api
   const [request, response, promptAsync] = useAuthRequest(
     {
       responseType: ResponseType.Token,
@@ -36,10 +63,11 @@ export default function PlayMusicScreen() {
       console.log('have not login yet');
     }
   }, [response]);
+  // get top tracks
   useEffect(() => {
     if (token) {
       fetch(
-        `https://api.spotify.com/v1/artists/${PorterRobinsonArtistID}/albums?include_groups=single&market=US`,
+        `https://api.spotify.com/v1/artists/${PorterRobinsonArtistID}/top-tracks?market=US`,
         {
           method: 'GET',
           headers: {
@@ -53,8 +81,15 @@ export default function PlayMusicScreen() {
           return response.json();
         })
         .then((response) => {
+          console.log(JSON.stringify(response.tracks[0].name, null, 2));
+          console.log(JSON.stringify(response.tracks[0].duration_ms, null, 2));
+          console.log(JSON.stringify(response.tracks[0].preview_url, null, 2));
+          console.log(
+            JSON.stringify(response.tracks[0].album.images[0].url, null, 2)
+          );
+
           setIsDataHere(true);
-          setAlbumData(response.items);
+          setTracksData(response.tracks);
         })
         .catch((error) => {
           console.log('spotify error', error.message);
@@ -79,15 +114,22 @@ export default function PlayMusicScreen() {
         />
       ) : (
         <ScrollView showsVerticalScrollIndicator={false}>
-          {albumData.map((album) => (
-            <View key={album.id} style={styles.card}>
+          {tracksData.map((item) => (
+            <View key={item.id} style={styles.card}>
               <View style={styles.albumHeader}>
                 <Image
-                  source={{ uri: album.images[0].url }}
+                  // we use the album.images[0].url to get the largest image they have
+                  source={{ uri: item.album.images[0].url }}
                   style={styles.image}
                 />
+                <View style={styles.playButton}>
+                  <Button
+                    title='PLAY'
+                    onPress={() => playSound(item.preview_url)}
+                  />
+                </View>
               </View>
-              <Text style={styles.albumName}>{album.name}</Text>
+              <Text style={styles.albumName}>{item.name}</Text>
             </View>
           ))}
         </ScrollView>
@@ -146,5 +188,21 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     marginLeft: 'auto',
     marginRight: 10,
+  },
+  playButton: {
+    backgroundColor: 'transparent',
+    alignSelf: 'center',
+    marginLeft: 'auto',
+    marginRight: 10,
+  },
+  feature: {
+    flexDirection: 'row',
+    padding: 10,
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    borderTopWidth: 1,
+    borderTopColor: 'rgb(180,180,180)',
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgb(230,230,230)',
   },
 });

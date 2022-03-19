@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView } from 'react-native';
+import { StyleSheet, ScrollView, Button, Linking } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
@@ -52,8 +52,22 @@ export default function TourScreen() {
         showsVerticalScrollIndicator={false}>
         {listOfTourDates.map((item) => (
           <View key={item.id} style={styles.card}>
-            <Text style={styles.text}>Date: {item.date}</Text>
-            <Text style={styles.text}>Location: {item.location}</Text>
+            <View style={styles.btn}>
+              <Button
+                title={'Tickets'}
+                onPress={() => {
+                  Linking.openURL(
+                    'https://www.ticketmaster.com/porter-robinson-tickets/artist/1610529'
+                  );
+                }}></Button>
+            </View>
+            <View
+              style={styles.separator2}
+              lightColor='#ddd'
+              darkColor='#333'
+            />
+            <Text style={styles.text1}>{item.date}</Text>
+            <Text style={styles.text2}>{item.location}</Text>
           </View>
         ))}
       </ScrollView>
@@ -77,19 +91,37 @@ const styles = StyleSheet.create({
     height: 1,
     width: '80%',
   },
+  separator2: {
+    marginVertical: 2,
+    height: 1,
+    width: '100%',
+  },
   card: {
     marginVertical: 5,
     minHeight: 100,
     padding: 10,
     flex: 0.3,
+    flexDirection: 'column',
     backgroundColor: '#ddd',
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
-  text: {
-    color: '#444',
+  btn: {
+    alignSelf: 'flex-end',
+    marginBottom: 15,
+    backgroundColor: 'transparent',
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+  text1: {
+    color: '#67788a',
+    fontSize: 16,
+  },
+  text2: {
+    color: '#67788a',
+    fontSize: 14,
   },
   scrollview: {
     width: '100%',

@@ -31,6 +31,7 @@ export type RootTabParamList = {
   TourDates: undefined;
   PlayMusic: undefined;
   Gallery: undefined;
+  Socials: undefined;
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =

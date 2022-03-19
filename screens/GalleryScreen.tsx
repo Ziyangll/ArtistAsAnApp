@@ -11,6 +11,12 @@ export default function GalleryScreen() {
     'https://i.imgur.com/OEPRCWW.png',
     'https://i.imgur.com/KQlxy9U.png',
     'https://i.imgur.com/WAoIORv.png',
+    'https://i.imgur.com/uHXh615.jpeg',
+    'https://i.imgur.com/1IjMVWL.jpeg',
+    'https://i.imgur.com/LKVWNRC.jpeg',
+    'https://i.imgur.com/FXoCCvC.jpeg',
+    'https://i.imgur.com/MP3gszh.jpeg',
+    'https://i.imgur.com/cJs5i0T.jpeg',
   ];
 
   return (
@@ -62,7 +68,7 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   image: {
-    backgroundColor: '#ddd',
+    backgroundColor: '#67788a',
     width: win.width,
     height: win.width / 1.6,
   },

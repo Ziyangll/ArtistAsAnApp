@@ -21,6 +21,7 @@ import NotFoundScreen from '../screens/NotFoundScreen';
 import PlayMusicScreen from '../screens/PlayMusicScreen';
 import TourScreen from '../screens/TourScreen';
 import GalleryScreen from '../screens/GalleryScreen';
+import SocialScreen from '../screens/SocialScreen';
 
 import {
   RootStackParamList,
@@ -109,6 +110,14 @@ function BottomTabNavigator() {
         component={GalleryScreen}
         options={{
           title: 'Gallery',
+          tabBarIcon: ({ color }) => <TabBarIcon name='photo' color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name='Socials'
+        component={SocialScreen}
+        options={{
+          title: 'Socials',
           tabBarIcon: ({ color }) => <TabBarIcon name='photo' color={color} />,
         }}
       />

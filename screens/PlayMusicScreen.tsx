@@ -116,17 +116,19 @@ export default function PlayMusicScreen() {
           }}
         />
       ) : (
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <View>
           <Button title='STOP' onPress={stopTheMusic} />
-          {tracksData.map((item) => (
-            <AudioPlayer
-              key={item.id}
-              item={item}
-              styles={styles}
-              playSound={playSound}
-            />
-          ))}
-        </ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            {tracksData.map((item) => (
+              <AudioPlayer
+                key={item.id}
+                item={item}
+                styles={styles}
+                playSound={playSound}
+              />
+            ))}
+          </ScrollView>
+        </View>
       )}
     </View>
   );
@@ -180,7 +182,7 @@ const styles = StyleSheet.create({
   },
   player: {
     backgroundColor: 'transparent',
-    color: '#333',
+    color: 'white',
     alignSelf: 'flex-end',
     marginLeft: 'auto',
     marginRight: 10,

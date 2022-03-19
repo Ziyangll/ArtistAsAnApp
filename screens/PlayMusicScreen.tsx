@@ -12,6 +12,8 @@ import { Text, View } from '../components/Themed';
 import { FontAwesome } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 
+import AudioPlayer from '../components/Player';
+
 const PorterRobinsonArtistID = '3dz0NnIZhtKKeXZxLOxCam';
 const discovery = {
   authorizationEndpoint: 'https://accounts.spotify.com/authorize',
@@ -25,12 +27,16 @@ export default function PlayMusicScreen() {
   // playing music
   const [sound, setSound] = React.useState();
   async function playSound(preview_url: string) {
-    console.log('Loading Sound');
-    const { sound } = await Audio.Sound.createAsync({ uri: preview_url });
-    setSound(sound);
+    try {
+      console.log('Loading Sound');
+      const { sound } = await Audio.Sound.createAsync({ uri: preview_url });
+      setSound(sound);
 
-    console.log('Playing Sound');
-    await sound.playAsync();
+      console.log('Playing Sound');
+      await sound.playAsync();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   React.useEffect(() => {
@@ -41,6 +47,10 @@ export default function PlayMusicScreen() {
         }
       : undefined;
   }, [sound]);
+  // stopping the music
+  const stopTheMusic = () => {
+    sound.unloadAsync();
+  };
   // connect to spotify api
   const [request, response, promptAsync] = useAuthRequest(
     {
@@ -81,13 +91,6 @@ export default function PlayMusicScreen() {
           return response.json();
         })
         .then((response) => {
-          console.log(JSON.stringify(response.tracks[0].name, null, 2));
-          console.log(JSON.stringify(response.tracks[0].duration_ms, null, 2));
-          console.log(JSON.stringify(response.tracks[0].preview_url, null, 2));
-          console.log(
-            JSON.stringify(response.tracks[0].album.images[0].url, null, 2)
-          );
-
           setIsDataHere(true);
           setTracksData(response.tracks);
         })
@@ -114,23 +117,14 @@ export default function PlayMusicScreen() {
         />
       ) : (
         <ScrollView showsVerticalScrollIndicator={false}>
+          <Button title='STOP' onPress={stopTheMusic} />
           {tracksData.map((item) => (
-            <View key={item.id} style={styles.card}>
-              <View style={styles.albumHeader}>
-                <Image
-                  // we use the album.images[0].url to get the largest image they have
-                  source={{ uri: item.album.images[0].url }}
-                  style={styles.image}
-                />
-                <View style={styles.playButton}>
-                  <Button
-                    title='PLAY'
-                    onPress={() => playSound(item.preview_url)}
-                  />
-                </View>
-              </View>
-              <Text style={styles.albumName}>{item.name}</Text>
-            </View>
+            <AudioPlayer
+              key={item.id}
+              item={item}
+              styles={styles}
+              playSound={playSound}
+            />
           ))}
         </ScrollView>
       )}
@@ -145,6 +139,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 20,
     backgroundColor: 'black',
+    width: '100%',
   },
   title: {
     fontSize: 20,
@@ -160,6 +155,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     minHeight: 100,
     padding: 10,
+    width: '100%',
     flex: 0.3,
     backgroundColor: '#ddd',
     borderBottomLeftRadius: 10,

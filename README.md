@@ -13,8 +13,9 @@ This app provides information and history of Porter Robinson as an artist.
 
 # How to use
 
-Install all dependency
-
+- $git clone https://github.com/Ziyangll/ArtistAsAnApp
+- $cd ArtistAsAnApp
+  Install all dependency
 - $yarn install
   Start the app with
 - $yarn start

@@ -5,7 +5,11 @@
  */
 import { FontAwesome } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
+import {
+  NavigationContainer,
+  DefaultTheme,
+  DarkTheme,
+} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { ColorSchemeName, Pressable } from 'react-native';
@@ -18,10 +22,18 @@ import PlayMusicScreen from '../screens/PlayMusicScreen';
 import TourScreen from '../screens/TourScreen';
 import GalleryScreen from '../screens/GalleryScreen';
 
-import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
+import {
+  RootStackParamList,
+  RootTabParamList,
+  RootTabScreenProps,
+} from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
-export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
+export default function Navigation({
+  colorScheme,
+}: {
+  colorScheme: ColorSchemeName;
+}) {
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
@@ -40,10 +52,18 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
-      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+      <Stack.Screen
+        name='Root'
+        component={BottomTabNavigator}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='NotFound'
+        component={NotFoundScreen}
+        options={{ title: 'Oops!' }}
+      />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
+        <Stack.Screen name='Modal' component={ModalScreen} />
       </Stack.Group>
     </Stack.Navigator>
   );
@@ -60,32 +80,36 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="Tour Dates"
+      initialRouteName='PlayMusic'
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
       <BottomTab.Screen
-        name="Tour Dates"
+        name='TourDates'
         component={TourScreen}
         options={{
           title: 'Tour Dates',
-          tabBarIcon: ({ color }) => <TabBarIcon name="calendar" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name='calendar' color={color} />
+          ),
         }}
       />
       <BottomTab.Screen
-        name="Play Music"
+        name='PlayMusic'
         component={PlayMusicScreen}
         options={{
           title: 'Play Music',
-          tabBarIcon: ({ color }) => <TabBarIcon name="play-circle" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name='play-circle' color={color} />
+          ),
         }}
       />
       <BottomTab.Screen
-        name="Gallery"
+        name='Gallery'
         component={GalleryScreen}
         options={{
           title: 'Gallery',
-          tabBarIcon: ({ color }) => <TabBarIcon name="photo" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name='photo' color={color} />,
         }}
       />
     </BottomTab.Navigator>

@@ -41,7 +41,7 @@ export default function TourScreen() {
   }, []);
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tour Dates</Text>
+      <Text style={styles.title}>Porter Robinson</Text>
       <View
         style={styles.separator}
         lightColor='#eee'
@@ -52,8 +52,8 @@ export default function TourScreen() {
         showsVerticalScrollIndicator={false}>
         {listOfTourDates.map((item) => (
           <View key={item.id} style={styles.card}>
-            <Text>Date: {item.date}</Text>
-            <Text>Location: {item.location}</Text>
+            <Text style={styles.text}>Date: {item.date}</Text>
+            <Text style={styles.text}>Location: {item.location}</Text>
           </View>
         ))}
       </ScrollView>
@@ -66,13 +66,14 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingVertical: 20,
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
   },
   separator: {
-    marginVertical: 30,
+    marginVertical: 10,
     height: 1,
     width: '80%',
   },
@@ -80,13 +81,15 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     minHeight: 100,
     padding: 10,
-
     flex: 0.3,
-    backgroundColor: '#eeeeee',
+    backgroundColor: '#ddd',
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
+  },
+  text: {
+    color: '#444',
   },
   scrollview: {
     width: '80%',

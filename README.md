@@ -11,4 +11,7 @@ This app provides information and history of Porter Robinson as an artist.
 - ? follow all social medias
 
 # How to use
-- expo start
+Install all dependency
+- $npm i
+Start the app with
+- yarn start

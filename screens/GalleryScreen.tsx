@@ -5,6 +5,7 @@ import { Text, View } from '../components/Themed';
 const win = Dimensions.get('window');
 export default function GalleryScreen() {
   const photos = [
+    'https://i.scdn.co/image/ab6761610000e5eb1804f56bdcb9322c5f3f8f21',
     'https://i.imgur.com/mrdzgiy.jpg',
     'https://i.imgur.com/Dpb0iCz.jpg',
     'https://i.imgur.com/OEPRCWW.png',

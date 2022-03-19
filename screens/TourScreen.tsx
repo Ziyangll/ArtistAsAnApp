@@ -92,6 +92,6 @@ const styles = StyleSheet.create({
     color: '#444',
   },
   scrollview: {
-    width: '80%',
+    width: '100%',
   },
 });
